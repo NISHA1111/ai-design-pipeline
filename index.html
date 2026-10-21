@@ -1,0 +1,894 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>AI Design Pipeline Documentation</title>
+    <meta name="description"
+        content="A reusable AI-assisted design workflow for moving from a business problem to a validated product design." />
+
+    <!-- Google Fonts: Inter at weights 600 (semibold) and 800 (extrabold) strictly per DESIGN-1win.md -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@600;800&display=swap" rel="stylesheet" />
+
+    <link rel="stylesheet" href="style.css" />
+</head>
+
+<body>
+
+    <!-- Sticky Top Navigation Bar (top-nav) -->
+    <header class="top-nav" id="top-nav">
+        <a href="#overview" class="top-nav-brand" aria-label="AI Design Pipeline Home">
+            <span class="brand-badge">AI</span>
+            <span class="brand-title">AI DESIGN PIPELINE</span>
+            <span class="brand-tag">v1.0 SPEC</span>
+        </a>
+
+        <nav class="top-nav-center" aria-label="Document Navigation">
+            <a href="#problem" class="nav-link">1. Problem</a>
+            <a href="#solution" class="nav-link">2. Solution</a>
+            <a href="#pipeline-flow" class="nav-link">3. Flow</a>
+            <a href="#agents" class="nav-link">4. Agents</a>
+            <a href="#orchestrator" class="nav-link">5. Orchestrator</a>
+            <a href="#project-memory" class="nav-link">6. Memory</a>
+            <a href="#responsibilities" class="nav-link">7. Responsibilities</a>
+        </nav>
+
+        <div class="top-nav-actions">
+            <div class="status-indicator-pill">
+                <span class="pulse-dot"></span>
+                <span>Active Pipeline</span>
+            </div>
+            <a href="#pipeline-flow" class="button-secondary">Explore Flow</a>
+            <a href="#agents" class="button-primary">View Agents</a>
+        </div>
+    </header>
+
+    <!-- Main Application Shell -->
+    <div class="app-shell">
+
+        <!-- Fixed Left Sidebar Rail (sidebar-rail) -->
+        <aside class="sidebar-rail" aria-label="Quick Rail Navigation">
+            <a href="#overview" class="rail-btn active" id="rail-overview" title="Overview">
+                <svg viewBox="0 0 24 24">
+                    <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+                    <polyline points="9 22 9 12 15 12 15 22"></polyline>
+                </svg>
+                <span class="rail-btn-label">Overview</span>
+            </a>
+            <div class="rail-divider"></div>
+            <a href="#problem" class="rail-btn" id="rail-problem" title="1. Problem">
+                <svg viewBox="0 0 24 24">
+                    <circle cx="12" cy="12" r="10"></circle>
+                    <line x1="12" y1="8" x2="12" y2="12"></line>
+                    <line x1="12" y1="16" x2="12.01" y2="16"></line>
+                </svg>
+                <span class="rail-btn-label">Problem</span>
+            </a>
+            <a href="#solution" class="rail-btn" id="rail-solution" title="2. Solution">
+                <svg viewBox="0 0 24 24">
+                    <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+                    <polyline points="22 4 12 14.01 9 11.01"></polyline>
+                </svg>
+                <span class="rail-btn-label">Solution</span>
+            </a>
+            <a href="#pipeline-flow" class="rail-btn" id="rail-flow" title="3. Pipeline Flow">
+                <svg viewBox="0 0 24 24">
+                    <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline>
+                </svg>
+                <span class="rail-btn-label">Flow</span>
+            </a>
+            <a href="#agents" class="rail-btn" id="rail-agents" title="4. Agents">
+                <svg viewBox="0 0 24 24">
+                    <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                    <circle cx="9" cy="7" r="4"></circle>
+                    <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+                    <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+                </svg>
+                <span class="rail-btn-label">Agents</span>
+            </a>
+            <a href="#orchestrator" class="rail-btn" id="rail-orchestrator" title="5. Orchestrator & Gates">
+                <svg viewBox="0 0 24 24">
+                    <rect x="2" y="2" width="20" height="8" rx="2" ry="2"></rect>
+                    <rect x="2" y="14" width="20" height="8" rx="2" ry="2"></rect>
+                    <line x1="6" y1="6" x2="6.01" y2="6"></line>
+                    <line x1="6" y1="18" x2="6.01" y2="18"></line>
+                </svg>
+                <span class="rail-btn-label">Gates</span>
+            </a>
+            <a href="#project-memory" class="rail-btn" id="rail-memory" title="6. Memory & Review">
+                <svg viewBox="0 0 24 24">
+                    <path
+                        d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z">
+                    </path>
+                    <polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline>
+                    <line x1="12" y1="22.08" x2="12" y2="12"></line>
+                </svg>
+                <span class="rail-btn-label">Memory</span>
+            </a>
+            <a href="#responsibilities" class="rail-btn" id="rail-responsibilities"
+                title="7. Inputs, Outputs & Responsibilities">
+                <svg viewBox="0 0 24 24">
+                    <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                    <polyline points="14 2 14 8 20 8"></polyline>
+                    <line x1="16" y1="13" x2="8" y2="13"></line>
+                    <line x1="16" y1="17" x2="8" y2="17"></line>
+                </svg>
+                <span class="rail-btn-label">I/O Spec</span>
+            </a>
+        </aside>
+
+        <!-- Main Column -->
+        <main class="main-column">
+
+            <!-- Hero Banner (hero-banner) -->
+            <section class="hero-banner" id="overview">
+                <div class="hero-content">
+                    <div class="hero-meta-bar">
+                        <span class="pill-badge green">AI Architecture</span>
+                        <span class="pill-outline">Autonomous Design System</span>
+                        <span class="pill-outline">Human-in-the-Loop</span>
+                    </div>
+
+                    <h1 class="hero-title">AI Design Pipeline Documentation</h1>
+
+                    <p class="hero-lead">
+                        A reusable AI-assisted design workflow for moving from a business problem
+                        to a validated product design.
+                    </p>
+
+                    <div class="hero-stats-row">
+                        <div class="stat-chip">
+                            <span class="stat-value">10</span>
+                            <span class="stat-label">Pipeline Stages</span>
+                        </div>
+                        <div class="stat-chip">
+                            <span class="stat-value">5</span>
+                            <span class="stat-label">Specialized Agents</span>
+                        </div>
+                        <div class="stat-chip">
+                            <span class="stat-value">100%</span>
+                            <span class="stat-label">Review Gate Quality</span>
+                        </div>
+                        <div class="stat-chip">
+                            <span class="stat-value">Unified</span>
+                            <span class="stat-label">Project Memory</span>
+                        </div>
+                    </div>
+
+                    <div class="hero-actions">
+                        <a href="#pipeline-flow" class="button-primary">View 10-Stage Pipeline Flow</a>
+                        <a href="#agents" class="button-tertiary">Explore Agents</a>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 2-Column Grid: Section 1 (Problem) & Section 2 (Solution) -->
+            <div class="two-col-grid">
+
+                <!-- Section 1: Problem -->
+                <section class="feature-card problem-card" id="problem">
+                    <div class="card-header-row">
+                        <div class="card-header-left">
+                            <div class="section-icon-badge">
+                                <svg viewBox="0 0 24 24">
+                                    <circle cx="12" cy="12" r="10"></circle>
+                                    <line x1="12" y1="8" x2="12" y2="12"></line>
+                                    <line x1="12" y1="16" x2="12.01" y2="16"></line>
+                                </svg>
+                            </div>
+                            <h2 class="section-title">1. Problem</h2>
+                        </div>
+                        <span class="pill-outline">Design Friction</span>
+                    </div>
+
+                    <p class="card-body-text">
+                        Design teams often move through research, ideation, UI design, prototyping,
+                        review, and handoff using separate tools and disconnected steps.
+                        This AI Design Pipeline brings those stages into one structured workflow
+                        where specialized agents support each phase and human review remains part
+                        of important decisions.
+                    </p>
+
+                    <div class="card-callout">
+                        <span class="callout-title">Core Friction Factors</span>
+                        <div class="callout-list">
+                            <span class="pill-outline">Disconnected Tools</span>
+                            <span class="pill-outline">Context Loss</span>
+                            <span class="pill-outline">Manual Handoffs</span>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Section 2: Solution -->
+                <section class="feature-card solution-card" id="solution">
+                    <div class="card-header-row">
+                        <div class="card-header-left">
+                            <div class="section-icon-badge">
+                                <svg viewBox="0 0 24 24">
+                                    <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+                                    <polyline points="22 4 12 14.01 9 11.01"></polyline>
+                                </svg>
+                            </div>
+                            <h2 class="section-title">2. Solution</h2>
+                        </div>
+                        <span class="pill-badge green">Unified Engine</span>
+                    </div>
+
+                    <p class="card-body-text">
+                        I created a reusable AI-assisted design pipeline where specialized agents
+                        support research, ideation, UI design, prototyping, review, and handoff.
+                        An orchestrator coordinates the workflow, while review gates and human
+                        checkpoints help maintain quality, consistency, and trust.
+                    </p>
+
+                    <div class="card-callout">
+                        <span class="callout-title">Pipeline Pillars</span>
+                        <div class="callout-list">
+                            <span class="pill-outline">Specialized Agents</span>
+                            <span class="pill-outline">Central Orchestrator</span>
+                            <span class="pill-outline">Review Gates & Trust</span>
+                        </div>
+                    </div>
+                </section>
+
+            </div>
+
+            <!-- Section 3: Pipeline Flow (Rail & Stages) -->
+            <section class="feature-card" id="pipeline-flow">
+                <div class="card-header-row">
+                    <div class="card-header-left">
+                        <div class="section-icon-badge blue">
+                            <svg viewBox="0 0 24 24">
+                                <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline>
+                            </svg>
+                        </div>
+                        <h2 class="section-title">3. Pipeline Flow</h2>
+                    </div>
+                    <div class="rail-controls-header">
+                        <div class="rail-scroll-btns">
+                            <button type="button" class="rail-arrow-btn" id="flow-scroll-left" aria-label="Scroll left">
+                                <svg viewBox="0 0 24 24">
+                                    <polyline points="15 18 9 12 15 6"></polyline>
+                                </svg>
+                            </button>
+                            <button type="button" class="rail-arrow-btn" id="flow-scroll-right"
+                                aria-label="Scroll right">
+                                <svg viewBox="0 0 24 24">
+                                    <polyline points="9 18 15 12 9 6"></polyline>
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="pipeline-rail-container">
+                    <div class="rail-hint">
+                        <span class="pill-badge">Stage Rail</span>
+                        <span>Scroll horizontally to trace the sequential handoff from input to output</span>
+                    </div>
+
+                    <ol class="pipeline-flow-rail" id="flow-rail">
+                        <li>
+                            <div class="stage-top-row">
+                                <span class="stage-number">01</span>
+                                <span class="stage-connector-icon"><svg viewBox="0 0 24 24">
+                                        <line x1="5" y1="12" x2="19" y2="12"></line>
+                                        <polyline points="12 5 19 12 12 19"></polyline>
+                                    </svg></span>
+                            </div>
+                            <span class="stage-name">Business Problem</span>
+                            <span class="stage-phase-tag">Definition</span>
+                        </li>
+                        <li>
+                            <div class="stage-top-row">
+                                <span class="stage-number">02</span>
+                                <span class="stage-connector-icon"><svg viewBox="0 0 24 24">
+                                        <line x1="5" y1="12" x2="19" y2="12"></line>
+                                        <polyline points="12 5 19 12 12 19"></polyline>
+                                    </svg></span>
+                            </div>
+                            <span class="stage-name">Research</span>
+                            <span class="stage-phase-tag">Discovery</span>
+                        </li>
+                        <li>
+                            <div class="stage-top-row">
+                                <span class="stage-number">03</span>
+                                <span class="stage-connector-icon"><svg viewBox="0 0 24 24">
+                                        <line x1="5" y1="12" x2="19" y2="12"></line>
+                                        <polyline points="12 5 19 12 12 19"></polyline>
+                                    </svg></span>
+                            </div>
+                            <span class="stage-name">Persona & Pain Points</span>
+                            <span class="stage-phase-tag">Synthesis</span>
+                        </li>
+                        <li>
+                            <div class="stage-top-row">
+                                <span class="stage-number">04</span>
+                                <span class="stage-connector-icon"><svg viewBox="0 0 24 24">
+                                        <line x1="5" y1="12" x2="19" y2="12"></line>
+                                        <polyline points="12 5 19 12 12 19"></polyline>
+                                    </svg></span>
+                            </div>
+                            <span class="stage-name">Ideation</span>
+                            <span class="stage-phase-tag">Exploration</span>
+                        </li>
+                        <li>
+                            <div class="stage-top-row">
+                                <span class="stage-number">05</span>
+                                <span class="stage-connector-icon"><svg viewBox="0 0 24 24">
+                                        <line x1="5" y1="12" x2="19" y2="12"></line>
+                                        <polyline points="12 5 19 12 12 19"></polyline>
+                                    </svg></span>
+                            </div>
+                            <span class="stage-name">Information Architecture</span>
+                            <span class="stage-phase-tag">Structure</span>
+                        </li>
+                        <li>
+                            <div class="stage-top-row">
+                                <span class="stage-number">06</span>
+                                <span class="stage-connector-icon"><svg viewBox="0 0 24 24">
+                                        <line x1="5" y1="12" x2="19" y2="12"></line>
+                                        <polyline points="12 5 19 12 12 19"></polyline>
+                                    </svg></span>
+                            </div>
+                            <span class="stage-name">Wireframes</span>
+                            <span class="stage-phase-tag">Layout</span>
+                        </li>
+                        <li>
+                            <div class="stage-top-row">
+                                <span class="stage-number">07</span>
+                                <span class="stage-connector-icon"><svg viewBox="0 0 24 24">
+                                        <line x1="5" y1="12" x2="19" y2="12"></line>
+                                        <polyline points="12 5 19 12 12 19"></polyline>
+                                    </svg></span>
+                            </div>
+                            <span class="stage-name">UI Design</span>
+                            <span class="stage-phase-tag">Visuals</span>
+                        </li>
+                        <li>
+                            <div class="stage-top-row">
+                                <span class="stage-number">08</span>
+                                <span class="stage-connector-icon"><svg viewBox="0 0 24 24">
+                                        <line x1="5" y1="12" x2="19" y2="12"></line>
+                                        <polyline points="12 5 19 12 12 19"></polyline>
+                                    </svg></span>
+                            </div>
+                            <span class="stage-name">Prototype</span>
+                            <span class="stage-phase-tag">Interaction</span>
+                        </li>
+                        <li>
+                            <div class="stage-top-row">
+                                <span class="stage-number">09</span>
+                                <span class="stage-connector-icon"><svg viewBox="0 0 24 24">
+                                        <line x1="5" y1="12" x2="19" y2="12"></line>
+                                        <polyline points="12 5 19 12 12 19"></polyline>
+                                    </svg></span>
+                            </div>
+                            <span class="stage-name">Review & Validation</span>
+                            <span class="stage-phase-tag">Check</span>
+                        </li>
+                        <li>
+                            <div class="stage-top-row">
+                                <span class="stage-number">10</span>
+                                <span class="stage-connector-icon"><svg viewBox="0 0 24 24">
+                                        <polyline points="20 6 9 17 4 12"></polyline>
+                                    </svg></span>
+                            </div>
+                            <span class="stage-name">Handoff</span>
+                            <span class="stage-phase-tag">Production</span>
+                        </li>
+                    </ol>
+                </div>
+
+                <div class="flow-summary-box">
+                    <div class="info-icon">
+                        <svg viewBox="0 0 24 24">
+                            <circle cx="12" cy="12" r="10"></circle>
+                            <line x1="12" y1="16" x2="12" y2="12"></line>
+                            <line x1="12" y1="8" x2="12.01" y2="8"></line>
+                        </svg>
+                    </div>
+                    <p class="card-body-text">
+                        Each stage receives an input, performs a defined task, and produces an output
+                        that becomes the starting point for the next stage.
+                    </p>
+                </div>
+            </section>
+
+            <!-- Section 4: Agents -->
+            <section class="feature-card" id="agents">
+                <div class="card-header-row">
+                    <div class="card-header-left">
+                        <div class="section-icon-badge">
+                            <svg viewBox="0 0 24 24">
+                                <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                                <circle cx="9" cy="7" r="4"></circle>
+                                <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+                                <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+                            </svg>
+                        </div>
+                        <h2 class="section-title">4. Agents</h2>
+                    </div>
+                    <span class="pill-badge">5 Autonomous Units</span>
+                </div>
+
+                <ul class="agents-grid">
+                    <li>
+                        <div class="agent-card-header">
+                            <div class="agent-avatar-icon">
+                                <svg viewBox="0 0 24 24">
+                                    <circle cx="11" cy="11" r="8"></circle>
+                                    <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                                </svg>
+                            </div>
+                            <span class="pill-outline">Discovery Unit</span>
+                        </div>
+                        <p class="agent-content"><strong>Research Agent:</strong> gathers user needs, market insights,
+                            and pain points.</p>
+                        <div class="agent-footer-pill">
+                            <span class="pulse-dot"></span>
+                            <span>Inputs: Business Goal → Outputs: Insights & Personas</span>
+                        </div>
+                    </li>
+
+                    <li>
+                        <div class="agent-card-header">
+                            <div class="agent-avatar-icon">
+                                <svg viewBox="0 0 24 24">
+                                    <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+                                    <line x1="3" y1="9" x2="21" y2="9"></line>
+                                    <line x1="9" y1="21" x2="9" y2="9"></line>
+                                </svg>
+                            </div>
+                            <span class="pill-outline">Design System Unit</span>
+                        </div>
+                        <p class="agent-content"><strong>UI Design Agent:</strong> converts insights into interface
+                            concepts and screen designs.</p>
+                        <div class="agent-footer-pill">
+                            <span class="pulse-dot"></span>
+                            <span>Inputs: IA & Wireframes → Outputs: High-Fidelity UI</span>
+                        </div>
+                    </li>
+
+                    <li>
+                        <div class="agent-card-header">
+                            <div class="agent-avatar-icon">
+                                <svg viewBox="0 0 24 24">
+                                    <polygon points="5 3 19 12 5 21 5 3"></polygon>
+                                </svg>
+                            </div>
+                            <span class="pill-outline">Interaction Unit</span>
+                        </div>
+                        <p class="agent-content"><strong>Prototype Agent:</strong> connects screens into an interactive
+                            user flow.</p>
+                        <div class="agent-footer-pill">
+                            <span class="pulse-dot"></span>
+                            <span>Inputs: UI Screens → Outputs: Clickable Flow Prototype</span>
+                        </div>
+                    </li>
+
+                    <li>
+                        <div class="agent-card-header">
+                            <div class="agent-avatar-icon">
+                                <svg viewBox="0 0 24 24">
+                                    <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+                                </svg>
+                            </div>
+                            <span class="pill-outline">Quality Unit</span>
+                        </div>
+                        <p class="agent-content"><strong>Review Agent:</strong> checks usability, consistency, and
+                            design quality.</p>
+                        <div class="agent-footer-pill">
+                            <span class="pulse-dot"></span>
+                            <span>Inputs: Prototype & Specs → Outputs: Quality Audit Score</span>
+                        </div>
+                    </li>
+
+                    <li>
+                        <div class="agent-card-header">
+                            <div class="agent-avatar-icon">
+                                <svg viewBox="0 0 24 24">
+                                    <polyline points="16 18 22 12 16 6"></polyline>
+                                    <polyline points="8 6 2 12 8 18"></polyline>
+                                </svg>
+                            </div>
+                            <span class="pill-outline">Delivery Unit</span>
+                        </div>
+                        <p class="agent-content"><strong>Handoff Agent:</strong> prepares the final design outputs and
+                            specifications for implementation.</p>
+                        <div class="agent-footer-pill">
+                            <span class="pulse-dot"></span>
+                            <span>Inputs: Validated Prototype → Outputs: Code & Design Tokens</span>
+                        </div>
+                    </li>
+                </ul>
+            </section>
+
+            <!-- Section 5: Orchestrator & Review Gates -->
+            <section class="feature-card-elevated" id="orchestrator">
+                <div class="card-header-row">
+                    <div class="card-header-left">
+                        <div class="section-icon-badge blue">
+                            <svg viewBox="0 0 24 24">
+                                <rect x="2" y="2" width="20" height="8" rx="2" ry="2"></rect>
+                                <rect x="2" y="14" width="20" height="8" rx="2" ry="2"></rect>
+                                <line x1="6" y1="6" x2="6.01" y2="6"></line>
+                                <line x1="6" y1="18" x2="6.01" y2="18"></line>
+                            </svg>
+                        </div>
+                        <h2 class="section-title">5. Orchestrator & Review Gates</h2>
+                    </div>
+                    <span class="pill-badge green">Execution Control</span>
+                </div>
+
+                <div class="sub-panels-split">
+                    <!-- Orchestrator Sub-Panel -->
+                    <div class="sub-panel-card">
+                        <div class="sub-panel-header">
+                            <span class="pill-badge">Orchestrator</span>
+                            <h3 class="sub-panel-title">Workflow Coordination</h3>
+                        </div>
+                        <p class="card-body-text">
+                            The orchestrator manages the sequence of agents, passes outputs from one stage
+                            to the next, and keeps the workflow aligned with the project goal.
+                        </p>
+                        <div class="pipeline-diagram-pills">
+                            <span class="pill-outline">Sequential Routing</span>
+                            <span class="pill-outline">State Management</span>
+                            <span class="pill-outline">Goal Guardrails</span>
+                        </div>
+                    </div>
+
+                    <!-- Review Gates Sub-Panel -->
+                    <div class="sub-panel-card">
+                        <div class="sub-panel-header">
+                            <span class="pill-badge green">Review Gates</span>
+                            <h3 class="sub-panel-title">Quality Checkpoints</h3>
+                        </div>
+                        <p class="card-body-text">
+                            Review gates act as checkpoints before moving forward. They help verify
+                            research quality, design consistency, usability, safety, and overall readiness.
+                        </p>
+                        <div class="gate-checklist">
+                            <div class="gate-check-item active">
+                                <span class="check-icon">✓</span>
+                                <span>Research Quality</span>
+                            </div>
+                            <div class="gate-check-item active">
+                                <span class="check-icon">✓</span>
+                                <span>Design Consistency</span>
+                            </div>
+                            <div class="gate-check-item active">
+                                <span class="check-icon">✓</span>
+                                <span>Usability Check</span>
+                            </div>
+                            <div class="gate-check-item active">
+                                <span class="check-icon">✓</span>
+                                <span>Safety & Readiness</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Section 6: Project Memory & Human Review -->
+            <section class="feature-card" id="project-memory">
+                <div class="card-header-row">
+                    <div class="card-header-left">
+                        <div class="section-icon-badge">
+                            <svg viewBox="0 0 24 24">
+                                <path
+                                    d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z">
+                                </path>
+                                <polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline>
+                                <line x1="12" y1="22.08" x2="12" y2="12"></line>
+                            </svg>
+                        </div>
+                        <h2 class="section-title">6. Project Memory & Human Review</h2>
+                    </div>
+                    <span class="pill-outline">Governance & Trust</span>
+                </div>
+
+                <div class="sub-panels-split">
+                    <!-- Project Memory Sub-Panel -->
+                    <div class="sub-panel-card">
+                        <div class="sub-panel-header">
+                            <span class="pill-badge">Project Memory</span>
+                            <h3 class="sub-panel-title">Shared Context Hub</h3>
+                        </div>
+                        <p class="card-body-text">
+                            Project memory stores important context such as research findings, user needs,
+                            constraints, approved decisions, and previous outputs. This helps each agent
+                            work with the same project understanding across the pipeline.
+                        </p>
+                        <div class="memory-attributes-grid">
+                            <span class="pill-outline">Research findings</span>
+                            <span class="pill-outline">User needs</span>
+                            <span class="pill-outline">Constraints</span>
+                            <span class="pill-outline">Approved decisions</span>
+                            <span class="pill-outline">Previous outputs</span>
+                        </div>
+                    </div>
+
+                    <!-- Human Review Sub-Panel -->
+                    <div class="sub-panel-card">
+                        <div class="sub-panel-header">
+                            <span class="pill-badge green">Human Review</span>
+                            <h3 class="sub-panel-title">Decision Governance</h3>
+                        </div>
+                        <div class="human-review-callout">
+                            <p class="card-body-text">
+                                Human review remains part of important decisions. Research interpretation,
+                                design direction, safety-sensitive content, and final handoff are reviewed
+                                before approval.
+                            </p>
+                        </div>
+                        <div class="memory-attributes-grid">
+                            <span class="pill-outline">Research interpretation</span>
+                            <span class="pill-outline">Design direction</span>
+                            <span class="pill-outline">Safety-sensitive content</span>
+                            <span class="pill-outline">Final handoff approval</span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Section 7: Inputs, Outputs & Responsibilities -->
+            <section class="feature-card" id="responsibilities">
+                <div class="card-header-row">
+                    <div class="card-header-left">
+                        <div class="section-icon-badge blue">
+                            <svg viewBox="0 0 24 24">
+                                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                                <polyline points="14 2 14 8 20 8"></polyline>
+                                <line x1="16" y1="13" x2="8" y2="13"></line>
+                                <line x1="16" y1="17" x2="8" y2="17"></line>
+                            </svg>
+                        </div>
+                        <h2 class="section-title">7. Inputs, Outputs & Responsibilities</h2>
+                    </div>
+                    <span class="pill-badge">Handoff Contracts</span>
+                </div>
+
+                <div class="io-grid">
+                    <div class="io-card">
+                        <div class="io-card-header">
+                            <div class="io-card-title-group">
+                                <span class="stage-number">01</span>
+                                <h3>Business Problem</h3>
+                            </div>
+                            <span class="pill-outline">Initiation</span>
+                        </div>
+                        <div class="io-content">
+                            <div class="io-block input-block">
+                                <p><strong>Input:</strong> BRD or problem statement</p>
+                            </div>
+                            <div class="io-arrow-divider">
+                                <svg viewBox="0 0 24 24">
+                                    <line x1="12" y1="5" x2="12" y2="19"></line>
+                                    <polyline points="19 12 12 19 5 12"></polyline>
+                                </svg>
+                            </div>
+                            <div class="io-block output-block">
+                                <p><strong>Output:</strong> Clear design challenge and project goal</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="io-card">
+                        <div class="io-card-header">
+                            <div class="io-card-title-group">
+                                <span class="stage-number">02</span>
+                                <h3>Research Agent</h3>
+                            </div>
+                            <span class="pill-outline">Discovery</span>
+                        </div>
+                        <div class="io-content">
+                            <div class="io-block input-block">
+                                <p><strong>Input:</strong> Problem statement and project context</p>
+                            </div>
+                            <div class="io-arrow-divider">
+                                <svg viewBox="0 0 24 24">
+                                    <line x1="12" y1="5" x2="12" y2="19"></line>
+                                    <polyline points="19 12 12 19 5 12"></polyline>
+                                </svg>
+                            </div>
+                            <div class="io-block output-block">
+                                <p><strong>Output:</strong> Research findings, user needs, and pain points</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="io-card">
+                        <div class="io-card-header">
+                            <div class="io-card-title-group">
+                                <span class="stage-number">03</span>
+                                <h3>UI Design Agent</h3>
+                            </div>
+                            <span class="pill-outline">Interface</span>
+                        </div>
+                        <div class="io-content">
+                            <div class="io-block input-block">
+                                <p><strong>Input:</strong> Approved research insights, IA, and user needs</p>
+                            </div>
+                            <div class="io-arrow-divider">
+                                <svg viewBox="0 0 24 24">
+                                    <line x1="12" y1="5" x2="12" y2="19"></line>
+                                    <polyline points="19 12 12 19 5 12"></polyline>
+                                </svg>
+                            </div>
+                            <div class="io-block output-block">
+                                <p><strong>Output:</strong> UI concepts and screen designs</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="io-card">
+                        <div class="io-card-header">
+                            <div class="io-card-title-group">
+                                <span class="stage-number">04</span>
+                                <h3>Prototype Agent</h3>
+                            </div>
+                            <span class="pill-outline">Interaction</span>
+                        </div>
+                        <div class="io-content">
+                            <div class="io-block input-block">
+                                <p><strong>Input:</strong> Approved UI screens</p>
+                            </div>
+                            <div class="io-arrow-divider">
+                                <svg viewBox="0 0 24 24">
+                                    <line x1="12" y1="5" x2="12" y2="19"></line>
+                                    <polyline points="19 12 12 19 5 12"></polyline>
+                                </svg>
+                            </div>
+                            <div class="io-block output-block">
+                                <p><strong>Output:</strong> Interactive prototype and connected user flow</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="io-card">
+                        <div class="io-card-header">
+                            <div class="io-card-title-group">
+                                <span class="stage-number">05</span>
+                                <h3>Review Agent</h3>
+                            </div>
+                            <span class="pill-outline">Validation</span>
+                        </div>
+                        <div class="io-content">
+                            <div class="io-block input-block">
+                                <p><strong>Input:</strong> Prototype and design decisions</p>
+                            </div>
+                            <div class="io-arrow-divider">
+                                <svg viewBox="0 0 24 24">
+                                    <line x1="12" y1="5" x2="12" y2="19"></line>
+                                    <polyline points="19 12 12 19 5 12"></polyline>
+                                </svg>
+                            </div>
+                            <div class="io-block output-block">
+                                <p><strong>Output:</strong> Usability, consistency, and quality feedback</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="io-card">
+                        <div class="io-card-header">
+                            <div class="io-card-title-group">
+                                <span class="stage-number">06</span>
+                                <h3>Handoff Agent</h3>
+                            </div>
+                            <span class="pill-outline">Delivery</span>
+                        </div>
+                        <div class="io-content">
+                            <div class="io-block input-block">
+                                <p><strong>Input:</strong> Approved final prototype</p>
+                            </div>
+                            <div class="io-arrow-divider">
+                                <svg viewBox="0 0 24 24">
+                                    <line x1="12" y1="5" x2="12" y2="19"></line>
+                                    <polyline points="19 12 12 19 5 12"></polyline>
+                                </svg>
+                            </div>
+                            <div class="io-block output-block">
+                                <p><strong>Output:</strong> Developer-ready design specifications and handoff notes</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+        </main>
+    </div>
+
+    <!-- Page Footer (footer) -->
+    <footer class="app-footer">
+        <div class="footer-container">
+            <div class="footer-top-row">
+                <div class="footer-brand-col">
+                    <span class="footer-wordmark">AI DESIGN PIPELINE</span>
+                    <span class="footer-desc">End-to-end autonomous agent workflow with continuous human
+                        oversight.</span>
+                </div>
+                <div class="footer-nav">
+                    <a href="#overview" class="footer-link">Overview</a>
+                    <a href="#problem" class="footer-link">Problem</a>
+                    <a href="#solution" class="footer-link">Solution</a>
+                    <a href="#pipeline-flow" class="footer-link">Flow</a>
+                    <a href="#agents" class="footer-link">Agents</a>
+                    <a href="#orchestrator" class="footer-link">Orchestrator</a>
+                    <a href="#project-memory" class="footer-link">Memory & Review</a>
+                    <a href="#responsibilities" class="footer-link">Responsibilities</a>
+                </div>
+            </div>
+
+            <div class="footer-bottom-row">
+                <span>Designed with 1win Design System Principles · Dark Canvas & Surface Ladder · Inter (600 /
+                    800)</span>
+                <a href="#overview" class="button-tertiary">Back to Top ↑</a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Interactive Polish Script -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Horizontal scroll controls for Stage Rail
+            const flowRail = document.getElementById('flow-rail');
+            const scrollLeftBtn = document.getElementById('flow-scroll-left');
+            const scrollRightBtn = document.getElementById('flow-scroll-right');
+
+            if (flowRail && scrollLeftBtn && scrollRightBtn) {
+                scrollLeftBtn.addEventListener('click', () => {
+                    flowRail.scrollBy({ left: -260, behavior: 'smooth' });
+                });
+                scrollRightBtn.addEventListener('click', () => {
+                    flowRail.scrollBy({ left: 260, behavior: 'smooth' });
+                });
+            }
+
+            // Active section highlighting for rail buttons and top nav links
+            const sections = document.querySelectorAll('main section[id]');
+            const railButtons = document.querySelectorAll('.rail-btn');
+            const navLinks = document.querySelectorAll('.nav-link');
+
+            const observerOptions = {
+                root: null,
+                rootMargin: '-20% 0px -70% 0px',
+                threshold: 0
+            };
+
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        const id = entry.target.getAttribute('id');
+
+                        railButtons.forEach(btn => {
+                            const href = btn.getAttribute('href');
+                            if (href === '#' + id) {
+                                btn.classList.add('active');
+                            } else {
+                                btn.classList.remove('active');
+                            }
+                        });
+
+                        navLinks.forEach(link => {
+                            const href = link.getAttribute('href');
+                            if (href === '#' + id) {
+                                link.classList.add('active');
+                            } else {
+                                link.classList.remove('active');
+                            }
+                        });
+                    }
+                });
+            }, observerOptions);
+
+            sections.forEach(section => observer.observe(section));
+        });
+    </script>
+</body>
+
+</html>
